@@ -1,0 +1,16 @@
+# Maven
+target/
+backend/target/
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store

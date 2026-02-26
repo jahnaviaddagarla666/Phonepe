@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================= ROOT VARIABLES ================= */
+:root {
+  --phonepe: #6739b6;
+  --phonepe-dark: #512da8;
+  --phonepe-light: #7e57c2;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --blue-primary: #3b82f6;
+  --blue-secondary: #1e40af;
+  --gray-dark: #1f2937;
+  --gray-light: #f9fafb;
+}
+
+/* ================= GLOBAL RESET ================= */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f0f1e, #1a1a2e, #16213e);
+  color: var(--gray-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ================= GLASS EFFECT ================= */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+/* ================= CARDS ================= */
+.card,
+.card-dark {
+  border-radius: 24px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ================= GRADIENT TEXT ================= */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================================================= */
+/* 🔥 ALL @apply RULES ARE INSIDE @layer components */
+/* ================================================= */
+
+@layer components {
+
+  /* ---------- INPUTS ---------- */
+  .input-modern {
+    @apply rounded-lg border border-gray-200 px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-phonepe focus:border-transparent transition-all duration-300 shadow-sm hover:border-gray-300;
+  }
+
+  .input-modern::placeholder {
+    @apply text-gray-400;
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn-primary {
+    @apply bg-gradient-to-r from-phonepe to-phonepe-light text-white font-bold py-3 px-8 rounded-xl hover:shadow-2xl hover:from-phonepe-dark hover:to-phonepe focus:outline-none focus:ring-2 focus:ring-phonepe focus:ring-offset-2 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed relative overflow-hidden;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 font-semibold py-3 px-8 rounded-xl hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-300 disabled:opacity-60;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-danger to-red-500 text-white font-bold py-3 px-8 rounded-xl hover:shadow-2xl hover:from-red-600 hover:to-danger transition-all duration-300 disabled:opacity-60;
+  }
+
+  /* ---------- BADGES ---------- */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  /* ---------- SPINNER ---------- */
+  .spinner {
+    @apply inline-block animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent;
+  }
+
+  /* ---------- FORM INPUTS ---------- */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea {
+    @apply w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-phonepe focus:bg-white/15 focus:border-phonepe/50 transition-all duration-300;
+  }
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ================= LAYOUT HELPERS ================= */
+.centered-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
