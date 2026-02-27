@@ -97,13 +97,30 @@ git push -u origin main
 
 > **Note**: Replace with your actual backend URL from Render/Railway
 
-3. Click **Deploy**
+3. After saving variables, trigger a new deployment. Because Vite inlines environment variables at build time,
+   every change requires rebuilding the site. You can click the **Deploy** button in the Vercel dashboard
+after updating values, or simply push a new commit to GitHub (for example, `git commit --allow-empty -m "rebuild" && git push`).
 
+4. Wait for the build to finish and verify that the site shows the updated API endpoint.
+
+If the deployment hangs on "Once you're ready, start deploying to see the progress here…" or fails to start,
+make sure the project is pointed at the correct repository and branch, and that the **Root Directory** is
+set to `frontend` (see Step 2). You can also manually redeploy by clicking the three-dot menu on a previous
+deployment and selecting **Redeploy**.
 ### Step 4: Configure Rewrites (Already in vercel.json)
 
 The `vercel.json` file in the root directory already handles:
 - SPA routing (all routes go to index.html)
 - Environment variable setup
+
+> **Important:** The JSON must be *valid* (no `//` comments or trailing commas).
+> If the file is malformed Vercel will not process the rewrites and you’ll get
+> `404` on `/login` or `/signup`. We cleaned comments earlier; if you edit the
+> file again make sure it remains strict JSON.
+
+> **Note:** You only need one `vercel.json` per project. If you created both
+> `vercel.json` in the repo root and `frontend/vercel.json`, Vercel picks the
+> root one; keep them consistent or remove the unused file to avoid confusion.
 
 ### Step 5: Update CORS in Backend
 
@@ -359,13 +376,29 @@ Access to XMLHttpRequest blocked by CORS policy
 - Kill process using port 8080
 
 #### 4. Build Fails on Vercel
-**Problem**: `npm run build fails`
+**Problem**: `npm run build fails` or deployment never starts
 
 **Solutions**:
-- Check `frontend/package.json` has all dependencies
-- Run locally: `npm install && npm run build`
-- Check for syntax errors: `npm run lint`
-- Clear Vercel cache and redeploy
+- Ensure the **Root Directory** is set to `frontend` (otherwise Vercel won’t
+  find `package.json` and the build job will stall at "start deploying…").
+- Verify `frontend/package.json` lists all dependencies and the `build` script
+  works locally: `npm install && npm run build`.
+- Check for syntax errors: `npm run lint`.
+- If you change any environment variables (for example `VITE_API_BASE_URL`),
+  remember to redeploy the site because Vite substitutes them at build time.
+  You can click **Deploy** or push an empty commit to GitHub.
+- Clearing the Vercel cache and redeploying can also resolve corrupted builds.
+
+#### 7. Deployment Doesn’t Start or Stays at "Once you're ready…"
+**Problem**: Vercel shows the message "Once you're ready, start deploying to see the progress here…" but no build begins.
+
+**Solutions**:
+- Confirm the project is connected to the correct GitHub repository and branch.
+- Make sure auto‑deploy is enabled or manually trigger a deployment by
+  pushing a commit or using the **Deploy** button.
+- Check the **Projects → Settings → Git** page for any errors linking to GitHub.
+- If you ever experience this, simply redeploy by selecting the latest deployment
+  and clicking **Redeploy** from the options menu.
 
 #### 5. Frontend Can't Find API
 **Problem**: API endpoint returns 404
