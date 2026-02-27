@@ -1,7 +1,22 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+    // For production builds, use the environment variable or construct from current domain
+    if (import.meta.env.VITE_API_BASE_URL) {
+        return import.meta.env.VITE_API_BASE_URL;
+    }
+    
+    // Fallback to current domain with /api path
+    if (typeof window !== 'undefined') {
+        return `${window.location.origin}/api`;
+    }
+    
+    // Development fallback
+    return 'http://localhost:8080/api';
+};
+
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: getBaseURL(),
     headers: {
         'Content-Type': 'application/json',
     },
